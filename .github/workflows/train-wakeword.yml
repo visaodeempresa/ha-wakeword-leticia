@@ -1,0 +1,155 @@
+# Train Wake Word "Letícia" - GitHub Actions
+#
+# Este workflow treina o modelo de wake word e faz upload do artefato.
+#
+# IMPORTANTE: Requer self-hosted runner com:
+#   - GPU NVIDIA (recomendado, ou CPU com paciência)
+#   - ~30 GB de disco livre
+#   - CUDA toolkit instalado
+#
+# Para usar um self-hosted runner:
+#   1. GitHub repo → Settings → Actions → Runners → New self-hosted runner
+#   2. Siga as instruções para seu SO
+#   3. Adicione labels: self-hosted, gpu (ou cpu)
+#
+# Trigger: manual (workflow_dispatch) ou push em train_leticia.py
+
+name: Train Wake Word Letícia
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner_type:
+        description: 'Runner type (self-hosted-gpu or ubuntu-latest)'
+        required: true
+        default: 'self-hosted-gpu'
+        type: choice
+        options:
+          - self-hosted-gpu
+          - ubuntu-latest
+      skip_download:
+        description: 'Skip data download (use cached data)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  PYTHON_VERSION: '3.10'
+  # Cache key for large data files
+  DATA_CACHE_KEY: oww-training-data-v1
+
+jobs:
+  train:
+    name: Train Model
+    runs-on: ${{ github.event.inputs.runner_type || 'self-hosted-gpu' }}
+    timeout-minutes: 360  # 6 hours max
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Check GPU
+        run: |
+          echo "=== GPU Info ==="
+          if command -v nvidia-smi &> /dev/null; then
+            nvidia-smi
+            echo "GPU_AVAILABLE=true" >> $GITHUB_ENV
+          else
+            echo "No GPU detected, training will be CPU-only (slower)"
+            echo "GPU_AVAILABLE=false" >> $GITHUB_ENV
+          fi
+
+      - name: Check disk space
+        run: |
+          echo "=== Disk Space ==="
+          df -h .
+          AVAIL=$(df -BG . | tail -1 | awk '{print $4}' | sed 's/G//')
+          echo "Available: ${AVAIL}G"
+          if [ "$AVAIL" -lt 25 ]; then
+            echo "::warning::Less than 25 GB available. ACAV100M download (17.3 GB) may fail."
+          fi
+
+      # Cache small-medium data (MIT RIRs, FMA, AudioSet, validation features)
+      # NOTE: ACAV100M (17.3 GB) exceeds GitHub cache limit (10 GB) —
+      # it must be on persistent storage for self-hosted runners
+      - name: Cache training data (small files)
+        if: ${{ !inputs.skip_download }}
+        uses: actions/cache@v4
+        with:
+          path: |
+            mit_rirs
+            audioset_16k
+            fma
+            validation_set_features.npy
+            piper_voices_ptbr
+            piper-sample-generator/models
+          key: ${{ env.DATA_CACHE_KEY }}
+
+      - name: Setup (install deps + models)
+        run: python train_leticia.py --setup
+
+      - name: Download training data
+        if: ${{ !inputs.skip_download }}
+        run: python train_leticia.py --download
+
+      - name: Generate clips (Piper pt_BR)
+        run: python train_leticia.py --generate
+
+      - name: Augment clips + extract features
+        run: python train_leticia.py --augment
+
+      - name: Train model
+        run: python train_leticia.py --train
+
+      - name: Verify outputs
+        run: |
+          echo "=== Model Files ==="
+          ls -lh my_custom_model/leticia.* 2>/dev/null || echo "No model files found!"
+
+          if [ -f my_custom_model/leticia.tflite ]; then
+            echo "✅ TFLite model ready!"
+            echo "MODEL_READY=true" >> $GITHUB_ENV
+          elif [ -f my_custom_model/leticia.onnx ]; then
+            echo "⚠️ Only ONNX model available (TFLite conversion failed)"
+            echo "MODEL_READY=true" >> $GITHUB_ENV
+          else
+            echo "❌ No model files generated!"
+            echo "MODEL_READY=false" >> $GITHUB_ENV
+            exit 1
+          fi
+
+      - name: Upload model artifacts
+        if: env.MODEL_READY == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: leticia-wakeword-model
+          path: |
+            my_custom_model/leticia.tflite
+            my_custom_model/leticia.onnx
+          retention-days: 90
+
+      - name: Create Release (on main branch)
+        if: env.MODEL_READY == 'true' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: model-${{ github.run_number }}
+          name: "Letícia Wake Word Model (Build #${{ github.run_number }})"
+          body: |
+            Modelo de wake word "Letícia" treinado automaticamente.
+
+            **Arquivos:**
+            - `leticia.tflite` — Para Home Assistant
+            - `leticia.onnx` — Formato ONNX
+
+            **Deploy no HA Yellow:**
+            1. Copie `leticia.tflite` para `/share/openwakeword/`
+            2. Reinicie o add-on openWakeWord
+            3. Configure: Assistants → Pipeline → Wake Word = leticia
+          files: |
+            my_custom_model/leticia.tflite
+            my_custom_model/leticia.onnx

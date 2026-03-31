@@ -1,0 +1,34 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Modelos treinados (grandes demais para Git)
+*.tflite
+*.onnx
+*.pt
+*.npy
+
+# Dados de treinamento (gerados no Colab)
+my_custom_model/
+audioset*/
+fma/
+mit_rirs/
+piper_voices_ptbr/
+piper-sample-generator/
+openwakeword/
+test_audio/
+
+# IDE
+.vscode/
+.idea/
