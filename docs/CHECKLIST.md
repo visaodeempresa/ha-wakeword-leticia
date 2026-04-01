@@ -11,7 +11,7 @@
 
 ## Fase 2: Treinamento do Modelo (Google Colab)
 
-- [ ] Abrir notebook `train_leticia_ptbr.ipynb` no Google Colab
+- [ ] Abrir notebook `notebooks/train_leticia_ptbr.ipynb` no Google Colab
 - [ ] Verificar GPU ativada (Ambiente de execução > T4 GPU)
 - [ ] **Etapa 1:** Instalação de dependências (fork dscripka/piper-sample-generator)
 - [ ] **Etapa 2:** Ouvir pronúncia e ajustar target_word se necessário

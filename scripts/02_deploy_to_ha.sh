@@ -6,8 +6,8 @@
 # Uso: ./02_deploy_to_ha.sh <caminho_do_modelo.tflite> [endereço_do_HA]
 #
 # Exemplo:
-#   ./02_deploy_to_ha.sh ./leticia.tflite homeassistant.local
-#   ./02_deploy_to_ha.sh ./leticia.tflite 192.168.1.100
+#   ./scripts/02_deploy_to_ha.sh ./models/leticia.tflite homeassistant.local
+#   ./scripts/02_deploy_to_ha.sh ./models/leticia.tflite 192.168.1.100
 #
 
 set -euo pipefail

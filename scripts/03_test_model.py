@@ -8,8 +8,8 @@ Requisitos:
     pip install openwakeword pyaudio numpy
 
 Uso:
-    python 03_test_model.py --model ./leticia.onnx
-    python 03_test_model.py --model ./leticia.tflite
+    python scripts/03_test_model.py --model ./models/leticia.onnx
+    python scripts/03_test_model.py --model ./models/leticia.tflite
 """
 
 import argparse

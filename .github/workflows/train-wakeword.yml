@@ -91,20 +91,20 @@ jobs:
           key: ${{ env.DATA_CACHE_KEY }}
 
       - name: Setup (install deps + models)
-        run: python train_leticia.py --setup
+        run: python scripts/train_leticia.py --setup
 
       - name: Download training data
         if: ${{ !inputs.skip_download }}
-        run: python train_leticia.py --download
+        run: python scripts/train_leticia.py --download
 
       - name: Generate clips (Piper pt_BR)
-        run: python train_leticia.py --generate
+        run: python scripts/train_leticia.py --generate
 
       - name: Augment clips + extract features
-        run: python train_leticia.py --augment
+        run: python scripts/train_leticia.py --augment
 
       - name: Train model
-        run: python train_leticia.py --train
+        run: python scripts/train_leticia.py --train
 
       - name: Verify outputs
         run: |

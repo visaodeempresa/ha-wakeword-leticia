@@ -3,13 +3,13 @@
 Train custom wake word "Letícia" for openWakeWord / Home Assistant.
 
 Usage:
-    python train_leticia.py --all          # Run everything
-    python train_leticia.py --setup        # Install deps + download models
-    python train_leticia.py --download     # Download training data
-    python train_leticia.py --generate     # Generate clips with Piper pt_BR
-    python train_leticia.py --augment      # Augment clips + extract features
-    python train_leticia.py --train        # Train model
-    python train_leticia.py --convert      # Convert ONNX → TFLite
+    python scripts/train_leticia.py --all          # Run everything
+    python scripts/train_leticia.py --setup        # Install deps + download models
+    python scripts/train_leticia.py --download     # Download training data
+    python scripts/train_leticia.py --generate     # Generate clips with Piper pt_BR
+    python scripts/train_leticia.py --augment      # Augment clips + extract features
+    python scripts/train_leticia.py --train        # Train model
+    python scripts/train_leticia.py --convert      # Convert ONNX → TFLite
 
 All data sources verified 2026-03-30 against the official openWakeWord notebook:
   https://github.com/dscripka/openWakeWord/blob/main/notebooks/automatic_model_training.ipynb
