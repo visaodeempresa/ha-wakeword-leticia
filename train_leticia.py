@@ -125,12 +125,12 @@ def step_setup():
 
     # Install Python packages
     run('pip install -q pathvalidate piper-tts piper-phonemize-cross webrtcvad')
-    run("pip install -q 'torch<=2.5' torchvision torchaudio")
+    run("pip install -q torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121")
     run('pip install -q -e ./openwakeword')
     run('pip install -q mutagen==1.47.0 torchinfo==1.8.0 torchmetrics==1.2.0')
     run('pip install -q speechbrain==0.5.14 audiomentations==0.33.0 torch-audiomentations==0.11.0')
     run('pip install -q acoustics==0.2.6 scipy')
-    run('pip install -q onnxruntime onnxsim')
+    run('pip install -q onnxruntime-gpu onnxsim')
     run('pip install -q onnx2tf tensorflow==2.19.0')
     run('pip install -q onnx==1.19.1 onnx_graphsurgeon')
     run('pip install -q datasets==2.14.6')
