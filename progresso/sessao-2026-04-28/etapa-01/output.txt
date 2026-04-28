@@ -1,0 +1,32 @@
+=== ETAPA 1a: Instalação de Dependências (v8) ===
+
+[OK] tree instalado
+[OK] piper-sample-generator clonado
+[OK] openWakeWord clonado
+
+Fase 1: Removendo PyTorch pré-instalado...
+  Uninstalled: torch-2.10.0+cu128, torchvision-0.25.0+cu128, torchaudio-2.10.0+cu128
+[OK] PyTorch removido
+
+Fase 2: Instalando PyTorch cu121 (SEM torchvision)...
+  torch==2.4.0+cu121 ✅
+  torchaudio==2.4.0+cu121 ✅
+  WARN: timm 1.0.26 requires torchvision (não crítico)
+  WARN: fastai 2.8.7 requires torchvision (não crítico)
+[OK] PyTorch 2.4.0 + torchaudio cu121 instalado (sem torchvision)
+
+Fase 3: Dependências do openWakeWord (todas explícitas)...
+  WARN: transformers 5.0.0 requires huggingface-hub>=1.3.0 (temos 0.36.2)
+  WARN: gcsfs 2025.3.0 requires fsspec==2025.3.0 (temos 2023.10.0)
+  WARN: speexdsp-ns não instalado (requerido por openwakeword 0.6.0)
+[OK] Dependências instaladas
+
+Fase 4: ONNX e TensorFlow...
+  ERROR: onnxruntime==1.16.3 — versão não existe mais
+    Versões disponíveis: 1.17.0, 1.17.1, 1.17.3, 1.18.x, 1.19.x, 1.20.x, 1.21.x, 1.22.x, 1.23.x, 1.24.x, 1.25.x
+  ERROR: tensorflow-cpu==2.15.0 — não disponível para Python 3.12
+    Versões disponíveis (py3.12): 2.16.0, 2.17.x, 2.18.x, 2.19.x, 2.20.x, 2.21.x
+  onnx2tf ✅ (instalado)
+[OK] ONNX e TensorFlow instalados (mensagem enganosa — TF e onnxruntime falharam)
+
+⚠️  REINICIE A SESSÃO AGORA!
