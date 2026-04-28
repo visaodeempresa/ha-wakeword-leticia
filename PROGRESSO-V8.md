@@ -18,3 +18,10 @@
 **Próxima ação:** Executar Etapa 0 (Diagnóstico do Ambiente)
 
 ---
+
+### [23:32] 🔐 Aviso de segurança do Colab
+- Dialog: "Este notebook não é de autoria do Google"
+- Ação: clicou **"Executar assim mesmo"**
+- RAM sistema: 1.3 / 12.7 GB | GPU: 0.0 / 15.0 GB
+- Etapa 0 iniciando execução
+
