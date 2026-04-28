@@ -1,0 +1,8 @@
+=== DIAGNÓSTICO CUDA ===
+Tue Apr 28 02:32:32 2026
+NVIDIA-SMI 580.82.07  Driver Version: 580.82.07  CUDA Version: 13.0
+GPU 0: Tesla T4  |  43C  9W/70W  |  0MiB/15360MiB  |  0%
+nvcc: NVIDIA CUDA 12.8, V12.8.93  (built Fri_Feb_21_20:23:50_PST_2025)
+Libs: libcudart.so.12 => /usr/local/cuda/targets/x86_64-linux/lib/libcudart.so.12
+      libcudart.so    => /usr/local/cuda/targets/x86_64-linux/lib/libcudart.so
+=== FIM DO DIAGNÓSTICO ===
