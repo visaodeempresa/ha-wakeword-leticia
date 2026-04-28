@@ -51,3 +51,10 @@
 ## Próxima ação
 - ✅ Reiniciar sessão (conforme solicitado pelo notebook)
 - Executar Etapa 1b e verificar se torch cu121 + todas as deps estão OK
+
+## Erros encontrados no v9 → corrigidos no v10
+
+| Erro | Causa raiz | Correção v10 |
+|------|-----------|--------------|
+| `Failed building wheel for onnx==1.14.1` | onnx 1.14.1 não tem wheel para Python 3.12 | → `onnx>=1.15.0` |
+| `datasets 2.14.6 requires huggingface-hub<1.0.0` | instalamos hub 1.12.0 mas datasets esperava <1.0.0 | → `datasets` sem pin de versão |
