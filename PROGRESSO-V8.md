@@ -39,3 +39,10 @@ PyTorch cu121 vai linkar em `.so.12` → sem OSError.
 
 **Próxima ação:** Executar Etapa 1a (instalação de dependências)
 
+
+### [00:12] ✅ Etapa 1a — v10 SUCESSO TOTAL
+- Notebook: train_leticia_v10_gpu.ipynb
+- Duração: ~6 min | Disco: 52.5 GB (+9.6 GB)
+- 15/15 fases ✅ — zero erros, zero warnings críticos
+- **Próxima ação:** Reiniciar sessão → Etapa 1b
+

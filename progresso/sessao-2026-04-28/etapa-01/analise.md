@@ -58,3 +58,27 @@
 |------|-----------|--------------|
 | `Failed building wheel for onnx==1.14.1` | onnx 1.14.1 não tem wheel para Python 3.12 | → `onnx>=1.15.0` |
 | `datasets 2.14.6 requires huggingface-hub<1.0.0` | instalamos hub 1.12.0 mas datasets esperava <1.0.0 | → `datasets` sem pin de versão |
+
+## Resultado final — v10 ✅ SUCESSO TOTAL
+
+### Horário
+- Início: ~00:06 | Fim: 00:12 | **Duração: ~6 minutos**
+
+### Recursos ao final
+| Recurso | Usado | Total |
+|---------|-------|-------|
+| RAM sistema | 1.4 GB | 12.7 GB |
+| RAM GPU | 0.0 GB | 15.0 GB |
+| Disco | 52.5 GB | 112.6 GB (+9.6 GB vs início) |
+
+### Todas as fases ✅
+Fase 1 → Fase 2 → 3a → 3b → 3c → 3d → 3e → 3f → 3g → 4a → 4b → 4c → 4d → 4e → piper-deps
+**15/15 fases com sucesso. Zero erros. Zero warnings críticos.**
+
+### Estimativa de tempo para sessões futuras
+- Etapa 1a (v10): **~6 minutos** com Colab gratuito T4
+- Consumo de disco: +9.6 GB (instalação completa)
+
+### Próxima ação
+- Reiniciar sessão (obrigatório)
+- Executar Etapa 1b (verificação pós-reinício)
